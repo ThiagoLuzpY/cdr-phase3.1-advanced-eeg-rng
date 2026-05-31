@@ -44,11 +44,11 @@ The framework has now been tested across macroscopic, biological, neural, stocha
 The current empirical status is: 
 
 - CDR successfully detects injected structure when the representation is adequate 
-- - controls collapse cleanly across all validated phases 
-- - neural domains show low but non-zero residual structure 
-- - RNG-only behaves as a clean stochastic null baseline 
-- - simple and advanced EEG + RNG joint models have not yet produced robust cross-domain coupling 
-- - Phase III.1 produced a clean null_result under stricter multi-subject, latent and quantum-aware validation 
+- controls collapse cleanly across all validated phases 
+- neural domains show low but non-zero residual structure 
+- RNG-only behaves as a clean stochastic null baseline 
+- simple and advanced EEG + RNG joint models have not yet produced robust cross-domain coupling 
+- Phase III.1 produced a clean null_result under stricter multi-subject, latent and quantum-aware validation 
 
 
 The next planned stage, Phase III.2, will test whether any possible EEG–RNG relationship is regime-dependent, lag-dependent, conditional, or better captured by enriched EEG features.
