@@ -1,36 +1,26 @@
 {
     "project_name": "Phase3.1-Advanced-EEG-RNG",
     "phase_name": "Phase III.1",
-    "split_label": "leave_one_subject_out:SC4042",
+    "split_label": "leave_one_subject_out:SC4021",
     "dataset_metadata": {
         "project_name": "Phase3.1-Advanced-EEG-RNG",
         "phase_name": "Phase III.1",
-        "n_subjects_loaded": 10,
+        "n_subjects_loaded": 5,
         "subject_ids": [
             "SC4001",
             "SC4002",
             "SC4011",
             "SC4012",
-            "SC4021",
-            "SC4022",
-            "SC4031",
-            "SC4032",
-            "SC4041",
-            "SC4042"
+            "SC4021"
         ],
         "recording_ids": [
             "SC4001E0",
             "SC4002E0",
             "SC4011E0",
             "SC4012E0",
-            "SC4021E0",
-            "SC4022E0",
-            "SC4031E0",
-            "SC4032E0",
-            "SC4041E0",
-            "SC4042E0"
+            "SC4021E0"
         ],
-        "total_rows": 27597,
+        "total_rows": 13933,
         "rng_source": "ANU",
         "rng_n_uint8": 1024,
         "rng_n_bits": 8192,
@@ -43,12 +33,7 @@
             "SC4002E0": "EEG Fpz-Cz",
             "SC4011E0": "EEG Fpz-Cz",
             "SC4012E0": "EEG Fpz-Cz",
-            "SC4021E0": "EEG Fpz-Cz",
-            "SC4022E0": "EEG Fpz-Cz",
-            "SC4031E0": "EEG Fpz-Cz",
-            "SC4032E0": "EEG Fpz-Cz",
-            "SC4041E0": "EEG Fpz-Cz",
-            "SC4042E0": "EEG Fpz-Cz"
+            "SC4021E0": "EEG Fpz-Cz"
         },
         "errors": []
     },
@@ -64,11 +49,11 @@
         "eps_joint_train": 0.0,
         "eps_joint_test": 0.0,
         "eps_eeg_train": 0.0,
-        "eps_eeg_test": 0.1,
+        "eps_eeg_test": 0.0,
         "eps_rng_train": 0.0,
         "eps_rng_test": 0.0,
-        "joint_lift_over_eeg": -0.1,
-        "joint_lift_over_baseline": -0.1
+        "joint_lift_over_eeg": 0.0,
+        "joint_lift_over_baseline": 0.0
     },
     "model_scores": {
         "M0_observed_compact": {
@@ -76,114 +61,114 @@
             "label": "Observed compact baseline: delta_power x rng_bit",
             "n_states": 8,
             "n_components": 2,
-            "n_train": 24800,
-            "n_test": 2787,
+            "n_train": 11128,
+            "n_test": 2803,
             "eps_train": 0.0,
             "eps_test": 0.0,
-            "ll_train": -43265.076894407495,
-            "ll_test": -4363.144883964132,
+            "ll_train": -19887.467697461438,
+            "ll_test": -4510.361631686977,
             "n_params": 57,
-            "bic_train": 87106.91392794771,
-            "bic_test": 9178.454866494734,
-            "aic_train": 86644.15378881499,
-            "aic_test": 8840.289767928263,
-            "transitions_per_state": 3449.5,
-            "transitions_per_observed_state": 3449.5
+            "bic_train": 40306.016919738264,
+            "bic_test": 9473.214659790347,
+            "aic_train": 39888.935394922875,
+            "aic_test": 9134.723263373953,
+            "transitions_per_state": 1741.5,
+            "transitions_per_observed_state": 1741.5
         },
         "M1_eeg_informational": {
             "model": "M1_eeg_informational",
             "label": "EEG informational model: delta_power x eeg_info_bin x rng_bit",
             "n_states": 18,
             "n_components": 3,
-            "n_train": 24800,
-            "n_test": 2787,
+            "n_train": 11128,
+            "n_test": 2803,
             "eps_train": 0.0,
-            "eps_test": 0.07,
-            "ll_train": -49939.74838540461,
-            "ll_test": -5142.462996358707,
+            "eps_test": 0.0,
+            "ll_train": -23005.834562393073,
+            "ll_test": -5922.962873433846,
             "n_params": 307,
-            "bic_train": 102985.9066429802,
-            "bic_test": 12720.271348154372,
-            "aic_train": 100493.49677080922,
-            "aic_test": 10898.925992717413,
-            "transitions_per_state": 1533.111111111111,
-            "transitions_per_observed_state": 1533.111111111111
+            "bic_train": 48872.05558300235,
+            "bic_test": 14283.02853107528,
+            "aic_train": 46625.669124786145,
+            "aic_test": 12459.925746867691,
+            "transitions_per_state": 774.0,
+            "transitions_per_observed_state": 774.0
         },
         "M2_rng_quantum_proxy": {
             "model": "M2_rng_quantum_proxy",
             "label": "RNG quantum-aware proxy model: delta_power x q_rng_bin",
             "n_states": 9,
             "n_components": 2,
-            "n_train": 24800,
-            "n_test": 2787,
+            "n_train": 11128,
+            "n_test": 2803,
             "eps_train": 0.0,
             "eps_test": 0.0,
-            "ll_train": -41969.22344517858,
-            "ll_test": -4264.447541924433,
+            "ll_train": -19128.64805046803,
+            "ll_test": -4332.41139185814,
             "n_params": 73,
-            "bic_train": 84677.10461240434,
-            "bic_test": 9107.983718855048,
-            "aic_train": 84084.44689035715,
-            "aic_test": 8674.895083848865,
-            "transitions_per_state": 3066.222222222222,
-            "transitions_per_observed_state": 3066.222222222222
+            "bic_train": 38937.453141489095,
+            "bic_test": 9244.32930895131,
+            "aic_train": 38403.29610093606,
+            "aic_test": 8810.82278371628,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0
         },
         "M3_informational_joint": {
             "model": "M3_informational_joint",
             "label": "Informational joint model: eeg_info_bin x rng_info_bin",
             "n_states": 9,
             "n_components": 2,
-            "n_train": 24800,
-            "n_test": 2787,
+            "n_train": 11128,
+            "n_test": 2803,
             "eps_train": 0.01,
             "eps_test": 0.0,
-            "ll_train": -30171.11521445869,
-            "ll_test": -3355.141099518904,
+            "ll_train": -13915.27371258744,
+            "ll_test": -3987.724508792489,
             "n_params": 73,
-            "bic_train": 61080.88815096455,
-            "bic_test": 7289.37083404399,
-            "aic_train": 60488.23042891738,
-            "aic_test": 6856.282199037808,
-            "transitions_per_state": 3066.222222222222,
-            "transitions_per_observed_state": 3066.222222222222
+            "bic_train": 28510.70446572792,
+            "bic_test": 8554.955542820007,
+            "aic_train": 27976.54742517488,
+            "aic_test": 8121.449017584978,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0
         },
         "M4_latent_joint": {
             "model": "M4_latent_joint",
             "label": "Latent joint model: latent_state x rng_bit",
             "n_states": 6,
             "n_components": 2,
-            "n_train": 24800,
-            "n_test": 2787,
+            "n_train": 11128,
+            "n_test": 2803,
             "eps_train": 0.0,
             "eps_test": 0.0,
-            "ll_train": -33331.66065579856,
-            "ll_test": -3755.466607216679,
+            "ll_train": -14710.223734675095,
+            "ll_test": -4071.1660212273946,
             "n_params": 31,
-            "bic_train": 66976.99787849386,
-            "bic_test": 7756.847566285299,
-            "aic_train": 66725.32131159712,
-            "aic_test": 7572.933214433358,
-            "transitions_per_state": 4599.333333333333,
-            "transitions_per_observed_state": 4599.333333333333
+            "bic_train": 29709.28128109189,
+            "bic_test": 8388.423854540897,
+            "aic_train": 29482.44746935019,
+            "aic_test": 8204.33204245479,
+            "transitions_per_state": 2322.0,
+            "transitions_per_observed_state": 2322.0
         },
         "M5_augmented_final": {
             "model": "M5_augmented_final",
             "label": "Augmented final model: latent_state x rng_info_bin x q_rng_bin",
             "n_states": 27,
             "n_components": 3,
-            "n_train": 24800,
-            "n_test": 2787,
+            "n_train": 11128,
+            "n_test": 2803,
             "eps_train": 0.0,
             "eps_test": 0.0,
-            "ll_train": -48985.47321604276,
-            "ll_test": -5481.927974215456,
+            "ll_train": -21695.0860554393,
+            "ll_test": -5923.125753250423,
             "n_params": 703,
-            "bic_train": 105084.32148138912,
-            "bic_test": 16540.55883075072,
-            "aic_train": 99376.94643208552,
-            "aic_test": 12369.855948430912,
-            "transitions_per_state": 1022.074074074074,
-            "transitions_per_observed_state": 1314.095238095238
+            "bic_train": 49940.177583601704,
+            "bic_test": 17426.97872896969,
+            "aic_train": 44796.1721108786,
+            "aic_test": 13252.251506500847,
+            "transitions_per_state": 516.0,
+            "transitions_per_observed_state": 663.4285714285714
         }
     },
     "baseline_scores": {
@@ -192,38 +177,38 @@
             "label": "EEG-only baseline: delta_power x eeg_info_bin",
             "n_states": 9,
             "n_components": 2,
-            "n_train": 24800,
-            "n_test": 2787,
+            "n_train": 11128,
+            "n_test": 2803,
             "eps_train": 0.0,
-            "eps_test": 0.1,
-            "ll_train": -32842.319904467615,
-            "ll_test": -3203.9881730958105,
+            "eps_test": 0.0,
+            "ll_train": -15384.366893145032,
+            "ll_test": -3936.506690826173,
             "n_params": 73,
-            "bic_train": 66423.29753098241,
-            "bic_test": 6987.064981197803,
-            "aic_train": 65830.63980893523,
-            "aic_test": 6553.976346191621,
-            "transitions_per_state": 3066.222222222222,
-            "transitions_per_observed_state": 3066.222222222222
+            "bic_train": 31448.890826843104,
+            "bic_test": 8452.519906887375,
+            "aic_train": 30914.733786290064,
+            "aic_test": 8019.013381652346,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0
         },
         "rng_only": {
             "model": "B1_rng_only",
             "label": "RNG-only baseline: rng_bit x rng_info_bin",
             "n_states": 6,
             "n_components": 2,
-            "n_train": 24800,
-            "n_test": 2787,
+            "n_train": 11128,
+            "n_test": 2803,
             "eps_train": 0.0,
             "eps_test": 0.0,
-            "ll_train": -32617.195284680696,
-            "ll_test": -3635.7465105107935,
+            "ll_train": -14610.350449042686,
+            "ll_test": -3703.8111681078794,
             "n_params": 31,
-            "bic_train": 65548.06713625813,
-            "bic_test": 7517.4073728735275,
-            "aic_train": 65296.39056936139,
-            "aic_test": 7333.493021021587,
-            "transitions_per_state": 4599.333333333333,
-            "transitions_per_observed_state": 4599.333333333333
+            "bic_train": 29509.534709827072,
+            "bic_test": 7653.714148301868,
+            "aic_train": 29282.70089808537,
+            "aic_test": 7469.622336215759,
+            "transitions_per_state": 2322.0,
+            "transitions_per_observed_state": 2322.0
         }
     },
     "component_metadata": {
@@ -240,8 +225,8 @@
             ],
             "n_states": 8,
             "observed_states": 8,
-            "transitions_per_state": 3449.5,
-            "transitions_per_observed_state": 3449.5,
+            "transitions_per_state": 1741.5,
+            "transitions_per_observed_state": 1741.5,
             "sensitivity": false,
             "component_specs": [
                 {
@@ -249,9 +234,9 @@
                     "n_bins": 4,
                     "pre_binned": false,
                     "edges": [
-                        5.795369754770708e-06,
-                        1.4269864419172894e-05,
-                        2.7933389509951215e-05
+                        8.897449222247342e-06,
+                        1.9369050706302415e-05,
+                        3.350605910621842e-05
                     ],
                     "sensitivity": false
                 },
@@ -279,8 +264,8 @@
             ],
             "n_states": 18,
             "observed_states": 18,
-            "transitions_per_state": 1533.111111111111,
-            "transitions_per_observed_state": 1533.111111111111,
+            "transitions_per_state": 774.0,
+            "transitions_per_observed_state": 774.0,
             "sensitivity": false,
             "component_specs": [
                 {
@@ -288,8 +273,8 @@
                     "n_bins": 3,
                     "pre_binned": false,
                     "edges": [
-                        8.094173607680275e-06,
-                        2.196235130109281e-05
+                        1.2315562132614435e-05,
+                        2.7412131812960193e-05
                     ],
                     "sensitivity": false
                 },
@@ -322,8 +307,8 @@
             ],
             "n_states": 9,
             "observed_states": 9,
-            "transitions_per_state": 3066.222222222222,
-            "transitions_per_observed_state": 3066.222222222222,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0,
             "sensitivity": false,
             "component_specs": [
                 {
@@ -331,8 +316,8 @@
                     "n_bins": 3,
                     "pre_binned": false,
                     "edges": [
-                        8.094173607680275e-06,
-                        2.196235130109281e-05
+                        1.2315562132614435e-05,
+                        2.7412131812960193e-05
                     ],
                     "sensitivity": false
                 },
@@ -358,8 +343,8 @@
             ],
             "n_states": 9,
             "observed_states": 9,
-            "transitions_per_state": 3066.222222222222,
-            "transitions_per_observed_state": 3066.222222222222,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0,
             "sensitivity": false,
             "component_specs": [
                 {
@@ -391,8 +376,8 @@
             ],
             "n_states": 6,
             "observed_states": 6,
-            "transitions_per_state": 4599.333333333333,
-            "transitions_per_observed_state": 4599.333333333333,
+            "transitions_per_state": 2322.0,
+            "transitions_per_observed_state": 2322.0,
             "sensitivity": false,
             "component_specs": [
                 {
@@ -426,8 +411,8 @@
             ],
             "n_states": 27,
             "observed_states": 21,
-            "transitions_per_state": 1022.074074074074,
-            "transitions_per_observed_state": 1314.095238095238,
+            "transitions_per_state": 516.0,
+            "transitions_per_observed_state": 663.4285714285714,
             "sensitivity": false,
             "component_specs": [
                 {
@@ -457,20 +442,20 @@
     "skipped_models": {},
     "injection_curve": {
         "curve": {
-            "0.0100": 0.01,
-            "0.0300": 0.01,
-            "0.0500": 0.03
+            "0.0100": 0.0,
+            "0.0300": 0.02,
+            "0.0500": 0.04
         },
         "errors": {
-            "0.0100": 0.0,
-            "0.0300": 0.019999999999999997,
-            "0.0500": 0.020000000000000004
+            "0.0100": 0.01,
+            "0.0300": 0.009999999999999998,
+            "0.0500": 0.010000000000000002
         },
         "recovered_fraction": 1.0,
         "injectability_class": "high",
         "principal_eps_true": 0.05,
-        "principal_eps_hat": 0.03,
-        "principal_abs_err": 0.020000000000000004,
+        "principal_eps_hat": 0.04,
+        "principal_abs_err": 0.010000000000000002,
         "principal_passed": true
     },
     "controls": {
@@ -587,12 +572,7 @@
                         "SC4002": 2255,
                         "SC4011": 924,
                         "SC4012": 230,
-                        "SC4021": 2694,
-                        "SC4022": 870,
-                        "SC4031": 856,
-                        "SC4032": 309,
-                        "SC4041": 1245,
-                        "SC4042": 869
+                        "SC4021": 2694
                     },
                     "purpose": "preserve_rng_local_structure_but_break_alignment"
                 }
@@ -719,18 +699,13 @@
                         "eeg_info_bin"
                     ],
                     "source_map": {
-                        "SC4001": "SC4011",
-                        "SC4002": "SC4012",
-                        "SC4011": "SC4021",
-                        "SC4012": "SC4022",
-                        "SC4021": "SC4031",
-                        "SC4022": "SC4032",
-                        "SC4031": "SC4041",
-                        "SC4032": "SC4042",
-                        "SC4041": "SC4001",
-                        "SC4042": "SC4002"
+                        "SC4001": "SC4002",
+                        "SC4002": "SC4011",
+                        "SC4011": "SC4012",
+                        "SC4012": "SC4021",
+                        "SC4021": "SC4001"
                     },
-                    "shift": 2,
+                    "shift": 1,
                     "purpose": "replace_eeg_features_with_mismatched_subject_structure"
                 }
             },
@@ -987,8 +962,8 @@
             ],
             "n_states": 27,
             "observed_states": 21,
-            "transitions_per_state": 1022.074074074074,
-            "transitions_per_observed_state": 1314.095238095238,
+            "transitions_per_state": 516.0,
+            "transitions_per_observed_state": 663.4285714285714,
             "sensitivity": true,
             "component_specs": [
                 {
@@ -1019,7 +994,7 @@
         {
             "subject_id": "SC4001",
             "valid": true,
-            "train_rows": 24947,
+            "train_rows": 11283,
             "test_rows": 2650,
             "eps_joint_train": 0.0,
             "eps_joint_test": 0.0,
@@ -1033,7 +1008,7 @@
         {
             "subject_id": "SC4002",
             "valid": true,
-            "train_rows": 24768,
+            "train_rows": 11104,
             "test_rows": 2829,
             "eps_joint_train": 0.0,
             "eps_joint_test": 0.0,
@@ -1047,21 +1022,21 @@
         {
             "subject_id": "SC4011",
             "valid": true,
-            "train_rows": 24795,
+            "train_rows": 11131,
             "test_rows": 2802,
             "eps_joint_train": 0.0,
-            "eps_joint_test": 0.01,
+            "eps_joint_test": 0.0,
             "eps_eeg_train": 0.0,
-            "eps_eeg_test": 0.01,
+            "eps_eeg_test": 0.18,
             "eps_rng_train": 0.0,
-            "eps_rng_test": 0.07,
-            "joint_lift_over_eeg": 0.0,
-            "joint_lift_over_baseline": -0.060000000000000005
+            "eps_rng_test": 0.15,
+            "joint_lift_over_eeg": -0.18,
+            "joint_lift_over_baseline": -0.18
         },
         {
             "subject_id": "SC4012",
             "valid": true,
-            "train_rows": 24749,
+            "train_rows": 11085,
             "test_rows": 2848,
             "eps_joint_train": 0.0,
             "eps_joint_test": 0.0,
@@ -1075,7 +1050,7 @@
         {
             "subject_id": "SC4021",
             "valid": true,
-            "train_rows": 24793,
+            "train_rows": 11129,
             "test_rows": 2804,
             "eps_joint_train": 0.0,
             "eps_joint_test": 0.0,
@@ -1085,88 +1060,18 @@
             "eps_rng_test": 0.0,
             "joint_lift_over_eeg": 0.0,
             "joint_lift_over_baseline": 0.0
-        },
-        {
-            "subject_id": "SC4022",
-            "valid": true,
-            "train_rows": 24842,
-            "test_rows": 2755,
-            "eps_joint_train": 0.0,
-            "eps_joint_test": 0.0,
-            "eps_eeg_train": 0.0,
-            "eps_eeg_test": 0.0,
-            "eps_rng_train": 0.0,
-            "eps_rng_test": 0.8,
-            "joint_lift_over_eeg": 0.0,
-            "joint_lift_over_baseline": -0.8
-        },
-        {
-            "subject_id": "SC4031",
-            "valid": true,
-            "train_rows": 24777,
-            "test_rows": 2820,
-            "eps_joint_train": 0.0,
-            "eps_joint_test": 0.0,
-            "eps_eeg_train": 0.0,
-            "eps_eeg_test": 0.08,
-            "eps_rng_train": 0.0,
-            "eps_rng_test": 0.0,
-            "joint_lift_over_eeg": -0.08,
-            "joint_lift_over_baseline": -0.08
-        },
-        {
-            "subject_id": "SC4032",
-            "valid": true,
-            "train_rows": 24865,
-            "test_rows": 2732,
-            "eps_joint_train": 0.0,
-            "eps_joint_test": 0.0,
-            "eps_eeg_train": 0.0,
-            "eps_eeg_test": 0.0,
-            "eps_rng_train": 0.0,
-            "eps_rng_test": 0.0,
-            "joint_lift_over_eeg": 0.0,
-            "joint_lift_over_baseline": 0.0
-        },
-        {
-            "subject_id": "SC4041",
-            "valid": true,
-            "train_rows": 25028,
-            "test_rows": 2569,
-            "eps_joint_train": 0.0,
-            "eps_joint_test": 0.0,
-            "eps_eeg_train": 0.0,
-            "eps_eeg_test": 0.0,
-            "eps_rng_train": 0.0,
-            "eps_rng_test": 0.0,
-            "joint_lift_over_eeg": 0.0,
-            "joint_lift_over_baseline": 0.0
-        },
-        {
-            "subject_id": "SC4042",
-            "valid": true,
-            "train_rows": 24809,
-            "test_rows": 2788,
-            "eps_joint_train": 0.0,
-            "eps_joint_test": 0.0,
-            "eps_eeg_train": 0.0,
-            "eps_eeg_test": 0.1,
-            "eps_rng_train": 0.0,
-            "eps_rng_test": 0.0,
-            "joint_lift_over_eeg": -0.1,
-            "joint_lift_over_baseline": -0.1
         }
     ],
     "ablation": {
         "ablation_eps": {
-            "remove_I_t": 0.0,
+            "remove_I_t": 0.16,
             "remove_Z_t": 0.0,
-            "remove_Q_t": 0.0
+            "remove_Q_t": 0.07
         },
         "ablation_details": {
             "remove_I_t": {
                 "eps_train": 0.0,
-                "eps_test": 0.0,
+                "eps_test": 0.16,
                 "metadata": {
                     "columns": [
                         "eeg_info_score",
@@ -1174,9 +1079,8 @@
                         "eeg_info_bin",
                         "rng_info_bin"
                     ],
-                    "replacement": "within_subject_shuffle",
-                    "seed": 99991,
-                    "purpose": "ablate_informational_proxy_layer_without_state_degeneracy"
+                    "replacement": 0,
+                    "purpose": "ablate_informational_proxy_layer"
                 }
             },
             "remove_Z_t": {
@@ -1186,14 +1090,13 @@
                     "columns": [
                         "latent_state"
                     ],
-                    "replacement": "within_subject_shuffle",
-                    "seed": 99992,
-                    "purpose": "ablate_latent_state_layer_without_state_degeneracy"
+                    "replacement": 0,
+                    "purpose": "ablate_latent_state_layer"
                 }
             },
             "remove_Q_t": {
                 "eps_train": 0.0,
-                "eps_test": 0.0,
+                "eps_test": 0.07,
                 "metadata": {
                     "columns": [
                         "q_entropy_rate_drift",
@@ -1205,9 +1108,8 @@
                         "q_rng_score",
                         "q_rng_bin"
                     ],
-                    "replacement": "within_subject_shuffle",
-                    "seed": 99993,
-                    "purpose": "ablate_quantum_aware_proxy_layer_without_state_degeneracy"
+                    "replacement": 0,
+                    "purpose": "ablate_quantum_aware_proxy_layer"
                 }
             }
         }
@@ -1227,9 +1129,9 @@
             "F1_injection_recovery": {
                 "passed": true,
                 "metrics": {
-                    "eps_hat": 0.03,
+                    "eps_hat": 0.04,
                     "eps_true": 0.05,
-                    "abs_err": 0.020000000000000004,
+                    "abs_err": 0.010000000000000002,
                     "tol_abs": 0.05
                 }
             },
@@ -1268,10 +1170,10 @@
                 "passed": false,
                 "metrics": {
                     "eps_joint_test": 0.0,
-                    "eps_eeg_test": 0.1,
+                    "eps_eeg_test": 0.0,
                     "eps_rng_test": 0.0,
-                    "baseline_max": 0.1,
-                    "joint_lift": -0.1,
+                    "baseline_max": 0.0,
+                    "joint_lift": 0.0,
                     "joint_lift_min": 0.03,
                     "strong_joint_eps_min": 0.07,
                     "strong_joint_threshold_reached": false
@@ -1280,8 +1182,8 @@
             "F7_subject_generalization": {
                 "passed": false,
                 "metrics": {
-                    "n_subjects": 10,
-                    "n_valid_subjects": 10,
+                    "n_subjects": 5,
+                    "n_valid_subjects": 5,
                     "fraction_positive_lift": 0.0,
                     "median_joint_eps": 0.0,
                     "median_eeg_eps": 0.0,
@@ -1297,10 +1199,10 @@
                     "metric": "bic",
                     "baseline_model": "M0_observed_compact",
                     "advanced_model": "M5_augmented_final",
-                    "baseline_metric_value": 9178.454866494734,
-                    "advanced_metric_value": 16540.55883075072,
-                    "metric_delta_positive_is_good": -7362.103964255986,
-                    "ll_test_improvement": -1118.7830902513242,
+                    "baseline_metric_value": 9473.214659790347,
+                    "advanced_metric_value": 17426.97872896969,
+                    "metric_delta_positive_is_good": -7953.764069179344,
+                    "ll_test_improvement": -1412.7641215634467,
                     "min_test_ll_improvement": 0.0,
                     "baseline_n_states": 8,
                     "advanced_n_states": 27,
@@ -1315,12 +1217,12 @@
                     "ablation_delta_min": 0.02,
                     "n_ablations": 3,
                     "fraction_ablations_reduced": 0.0,
-                    "median_delta_from_full": 0.0,
+                    "median_delta_from_full": -0.07,
                     "all_required_ablations_reduce_signal": false,
                     "ablations": {
                         "remove_I_t": {
-                            "eps_ablated": 0.0,
-                            "delta_from_full": 0.0,
+                            "eps_ablated": 0.16,
+                            "delta_from_full": -0.16,
                             "passed": false
                         },
                         "remove_Z_t": {
@@ -1329,8 +1231,8 @@
                             "passed": false
                         },
                         "remove_Q_t": {
-                            "eps_ablated": 0.0,
-                            "delta_from_full": 0.0,
+                            "eps_ablated": 0.07,
+                            "delta_from_full": -0.07,
                             "passed": false
                         }
                     },
@@ -1355,15 +1257,15 @@
             "F8_complexity_penalty"
         ],
         "eps_joint_test": 0.0,
-        "eps_eeg_test": 0.1,
+        "eps_eeg_test": 0.0,
         "eps_rng_test": 0.0,
-        "baseline_max": 0.1,
-        "joint_lift": -0.1,
+        "baseline_max": 0.0,
+        "joint_lift": 0.0,
         "strong_joint_eps_min": 0.07,
         "joint_lift_min": 0.03
     },
     "config_summary": {
-        "max_subjects": 10,
+        "max_subjects": 5,
         "rng_use_bits": true,
         "rng_window_size": 64,
         "holdout_mode": "leave_one_subject_out",

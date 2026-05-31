@@ -6,7 +6,7 @@
     },
     "ablation_details": {
         "remove_I_t": {
-            "eps_train": 0.0,
+            "eps_train": 0.01,
             "eps_test": 0.0,
             "metadata": {
                 "columns": [
@@ -33,7 +33,7 @@
             }
         },
         "remove_Q_t": {
-            "eps_train": 0.0,
+            "eps_train": 0.01,
             "eps_test": 0.0,
             "metadata": {
                 "columns": [

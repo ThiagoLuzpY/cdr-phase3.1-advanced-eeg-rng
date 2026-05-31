@@ -87,7 +87,7 @@ class Phase3_1Config:
     # If empty, the loader will discover Sleep-EDF files automatically.
     # Recommended initial run: max_subjects = 5.
     subject_ids: Tuple[str, ...] = tuple()
-    max_subjects: int = 5
+    max_subjects: int = 10
     min_subjects_for_loso: int = 3
 
     # Sleep-EDF file conventions.

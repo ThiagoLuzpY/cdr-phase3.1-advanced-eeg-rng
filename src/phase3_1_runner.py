@@ -359,7 +359,19 @@ def transition_indices_from_row_split(
     idx_train_rows: np.ndarray,
     idx_test_rows: np.ndarray,
     lag: int,
+    df: Optional[pd.DataFrame] = None,
+    group_cols: Tuple[str, ...] = ("subject_id", "recording_id"),
 ) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Builds transition indices while preventing artificial transitions
+    across subject/recording boundaries.
+
+    Without this protection, the runner may incorrectly treat:
+
+        last epoch of SC4001 -> first epoch of SC4002
+
+    as a valid transition. That is not physically or methodologically valid.
+    """
     if n_rows < lag + 2:
         raise RuntimeError(f"Too few rows for transitions: n_rows={n_rows}, lag={lag}")
 
@@ -369,10 +381,26 @@ def transition_indices_from_row_split(
     train_mask[np.asarray(idx_train_rows, dtype=int)] = True
     test_mask[np.asarray(idx_test_rows, dtype=int)] = True
 
+    existing_group_cols: Tuple[str, ...] = tuple()
+
+    if df is not None:
+        existing_group_cols = tuple(c for c in group_cols if c in df.columns)
+
     train_t: List[int] = []
     test_t: List[int] = []
 
     for k in range(n_rows - lag):
+        same_segment = True
+
+        if df is not None and existing_group_cols:
+            for col in existing_group_cols:
+                if str(df.iloc[k][col]) != str(df.iloc[k + lag][col]):
+                    same_segment = False
+                    break
+
+        if not same_segment:
+            continue
+
         if train_mask[k] and train_mask[k + lag]:
             train_t.append(k)
         elif test_mask[k] and test_mask[k + lag]:
@@ -383,7 +411,8 @@ def transition_indices_from_row_split(
 
     if len(train_trans) < 2 or len(test_trans) < 2:
         raise RuntimeError(
-            f"Transition split too small: train={len(train_trans)}, test={len(test_trans)}"
+            f"Transition split too small after segment filtering: "
+            f"train={len(train_trans)}, test={len(test_trans)}"
         )
 
     return train_trans, test_trans
@@ -559,6 +588,8 @@ def evaluate_state_model(
         idx_train_rows=idx_train_rows,
         idx_test_rows=idx_test_rows,
         lag=int(cfg.lag),
+        df=df,
+        group_cols=("subject_id", "recording_id"),
     )
 
     curr_train = curr_all[idx_train_trans]
@@ -866,6 +897,11 @@ def run_phase3_1() -> None:
 
     dataset = load_phase3_1_dataset(cfg)
     raw_df = dataset.df.copy().reset_index(drop=True)
+
+    sort_cols = [c for c in ["subject_id", "recording_id", "epoch_idx"] if c in raw_df.columns]
+
+    if sort_cols:
+        raw_df = raw_df.sort_values(sort_cols).reset_index(drop=True)
 
     print(
         f"[Phase3.1] Loaded rows={len(raw_df)} | "

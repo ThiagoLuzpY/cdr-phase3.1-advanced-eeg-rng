@@ -706,10 +706,23 @@ def ablation_remove_I_t(
     cfg: Any,
 ) -> AblationFrame:
     """
-    Removes informational proxy layer I_t.
+    Ablates the informational proxy layer I_t via within-subject shuffle.
+
+    Important:
+        The previous implementation replaced I_t columns with constant zero.
+        That created degenerate super-states and could artificially inflate epsilon.
+
+        This version preserves the marginal distribution of I_t while destroying
+        its temporal/structural alignment within each subject.
     """
     cols = informational_proxy_columns(df, cfg)
-    controlled = _constant_replace_columns(df, cols, value=0)
+
+    controlled = _shuffle_block_columns(
+        df=df,
+        columns=cols,
+        seed=99991,
+        group_cols=("subject_id",),
+    )
 
     return AblationFrame(
         name="remove_I_t",
@@ -717,8 +730,9 @@ def ablation_remove_I_t(
         df=controlled,
         metadata={
             "columns": list(cols),
-            "replacement": 0,
-            "purpose": "ablate_informational_proxy_layer",
+            "replacement": "within_subject_shuffle",
+            "seed": 99991,
+            "purpose": "ablate_informational_proxy_layer_without_state_degeneracy",
         },
     )
 
@@ -728,10 +742,19 @@ def ablation_remove_Z_t(
     cfg: Any,
 ) -> AblationFrame:
     """
-    Removes latent inferred state Z_t.
+    Ablates the latent inferred state Z_t via within-subject shuffle.
+
+    This preserves the empirical distribution of latent states while destroying
+    their temporal/structural alignment.
     """
     cols = latent_columns(df, cfg)
-    controlled = _constant_replace_columns(df, cols, value=0)
+
+    controlled = _shuffle_block_columns(
+        df=df,
+        columns=cols,
+        seed=99992,
+        group_cols=("subject_id",),
+    )
 
     return AblationFrame(
         name="remove_Z_t",
@@ -739,8 +762,9 @@ def ablation_remove_Z_t(
         df=controlled,
         metadata={
             "columns": list(cols),
-            "replacement": 0,
-            "purpose": "ablate_latent_state_layer",
+            "replacement": "within_subject_shuffle",
+            "seed": 99992,
+            "purpose": "ablate_latent_state_layer_without_state_degeneracy",
         },
     )
 
@@ -750,10 +774,23 @@ def ablation_remove_Q_t(
     cfg: Any,
 ) -> AblationFrame:
     """
-    Removes quantum-aware proxy layer Q_t.
+    Ablates the quantum-aware proxy layer Q_t via within-subject shuffle.
+
+    Important:
+        The previous implementation replaced Q_t columns with constant zero.
+        That could collapse the proxy state space and create artificial structure.
+
+        This version preserves the marginal distribution of Q_t while destroying
+        its temporal/structural alignment within each subject.
     """
     cols = quantum_proxy_columns(df, cfg)
-    controlled = _constant_replace_columns(df, cols, value=0)
+
+    controlled = _shuffle_block_columns(
+        df=df,
+        columns=cols,
+        seed=99993,
+        group_cols=("subject_id",),
+    )
 
     return AblationFrame(
         name="remove_Q_t",
@@ -761,11 +798,11 @@ def ablation_remove_Q_t(
         df=controlled,
         metadata={
             "columns": list(cols),
-            "replacement": 0,
-            "purpose": "ablate_quantum_aware_proxy_layer",
+            "replacement": "within_subject_shuffle",
+            "seed": 99993,
+            "purpose": "ablate_quantum_aware_proxy_layer_without_state_degeneracy",
         },
     )
-
 
 def generate_proxy_ablation_frames(
     df: pd.DataFrame,

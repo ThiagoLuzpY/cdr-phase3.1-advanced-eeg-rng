@@ -112,12 +112,7 @@
                     "SC4002": 2255,
                     "SC4011": 924,
                     "SC4012": 230,
-                    "SC4021": 2694,
-                    "SC4022": 870,
-                    "SC4031": 856,
-                    "SC4032": 309,
-                    "SC4041": 1245,
-                    "SC4042": 869
+                    "SC4021": 2694
                 },
                 "purpose": "preserve_rng_local_structure_but_break_alignment"
             }
@@ -244,18 +239,13 @@
                     "eeg_info_bin"
                 ],
                 "source_map": {
-                    "SC4001": "SC4011",
-                    "SC4002": "SC4012",
-                    "SC4011": "SC4021",
-                    "SC4012": "SC4022",
-                    "SC4021": "SC4031",
-                    "SC4022": "SC4032",
-                    "SC4031": "SC4041",
-                    "SC4032": "SC4042",
-                    "SC4041": "SC4001",
-                    "SC4042": "SC4002"
+                    "SC4001": "SC4002",
+                    "SC4002": "SC4011",
+                    "SC4011": "SC4012",
+                    "SC4012": "SC4021",
+                    "SC4021": "SC4001"
                 },
-                "shift": 2,
+                "shift": 1,
                 "purpose": "replace_eeg_features_with_mismatched_subject_structure"
             }
         },

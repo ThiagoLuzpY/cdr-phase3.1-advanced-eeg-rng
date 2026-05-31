@@ -12,7 +12,8 @@
 - **Phase III.0.1** (EEG-only experimental neural validation) ✅ **COMPLETE**
 - **Phase III.0.2** (RNG-only experimental stochastic baseline validation) ✅ **COMPLETE**
 - **Phase III.0.3** (Joint EEG + RNG validation) ✅ **COMPLETE**
-- **Phase III.1 Redesign** (Multi-subject and latent / quantum-aware joint redesign) 📋 **PLANNED**
+- **Phase III.1** (Advanced multi-subject EEG + RNG redesign with latent and quantum-aware proxies) ✅ **COMPLETE — CLEAN NULL RESULT**
+- **Phase III.2** (Regime-aware, lagged and conditional EEG–RNG validation) 📋 **PLANNED**
 
 ---
 
@@ -35,6 +36,25 @@ Instead of relying solely on p-values, CDR requires multiple orthogonal validati
 
 ---
 
+
+## Current empirical status
+
+The framework has now been tested across macroscopic, biological, neural, stochastic and joint experimental domains. 
+
+The current empirical status is: 
+
+- CDR successfully detects injected structure when the representation is adequate 
+- - controls collapse cleanly across all validated phases 
+- - neural domains show low but non-zero residual structure 
+- - RNG-only behaves as a clean stochastic null baseline 
+- - simple and advanced EEG + RNG joint models have not yet produced robust cross-domain coupling 
+- - Phase III.1 produced a clean null_result under stricter multi-subject, latent and quantum-aware validation 
+
+
+The next planned stage, Phase III.2, will test whether any possible EEG–RNG relationship is regime-dependent, lag-dependent, conditional, or better captured by enriched EEG features.
+
+---
+
 ## Project Roadmap
 
 The CDR validation program is divided into empirical phases.
@@ -50,8 +70,8 @@ The CDR validation program is divided into empirical phases.
 | **Phase III.0.1**        | EEG-only experimental neural validation | ✅ Complete |
 | **Phase III.0.2**        | RNG-only baseline validation | ✅ Complete |
 | **Phase III.0.3**        | Joint EEG + RNG validation | ✅ Complete |
-| **Phase III.1 Redesign** | Multi-subject and latent / quantum-aware redesign of the EEG–RNG joint experiment | 📋 Planned |
-
+| **Phase III.1** | Advanced multi-subject EEG + RNG redesign with informational, latent and quantum-aware proxy layers | ✅ Complete — clean null result | 
+| **Phase III.2** | Regime-aware, lagged and conditional EEG–RNG validation | 📋 Planned |
 
 
 
@@ -705,7 +725,7 @@ This phase confirms that:
 
 ## Updated Cross-Domain Conclusions (Phase II + Phase III)
 
-Across **eight empirical domains / experimental configurations**:
+Across **nine empirical domains / experimental configurations**:
 
 | Domain | Result |
 |--------|--------|
@@ -717,6 +737,8 @@ Across **eight empirical domains / experimental configurations**:
 | EEG-only | ε ≈ 0.04 |
 | RNG-only | ε ≈ 0 |
 | Joint EEG + RNG | ε ≈ 0.00–0.03 |
+| Advanced multi-subject EEG + RNG redesign | ε_joint ≈ 0.00; clean null_result |
+
 
 ---
 
@@ -769,6 +791,35 @@ The joint domain did **not** show strong cross-domain structure under the presen
 
 ---
 
+### 4. Advanced joint null-result systems
+
+
+```
+ε_joint ≈ 0
+```
+
+Observed in:
+
+- Phase III.1 advanced multi-subject EEG + RNG redesign
+
+The advanced joint redesign introduced:
+
+- multi-subject EEG expansion
+- informational proxy variables `I_t`
+- latent inferred states `Z_t`
+- quantum-aware proxy variables `Q_t`
+- subject-level diagnostics
+- ablation-corrected proxy controls
+- BIC / complexity-penalty model selection
+
+Despite this stronger design, the final advanced joint model did **not** reveal residual joint structure beyond the EEG-only or RNG-only baselines.
+
+The result is therefore interpreted as a **clean null_result**, not as a technical failure.
+
+This indicates that, under the present public observational EEG + RNG setup, the hypothesized joint EEG–RNG structure is not detectable through a global joint-state model, even after adding latent and quantum-aware proxy layers.
+
+---
+
 ## Emerging Methodological Insight
 
 The cumulative results also suggest that **F1 injection recovery is domain-dependent**.
@@ -784,6 +835,112 @@ and
   (e.g. fMRI, EEG, RNG, and the joint EEG+RNG domain)
 
 This suggests that F1 may measure not only estimator validity, but also a domain-sensitive property related to how easily imposed artificial structure can be absorbed and recovered by the system representation.
+
+---
+
+### Additional methodological findings from Phase III.1
+
+Phase III.1 added several methodological constraints and insights to the CDR framework.
+
+#### 1. Clean null results are scientifically meaningful
+
+The advanced joint model did not pass the stronger Phase III.1 gates, but this outcome is methodologically important.
+
+The pipeline showed:
+
+- successful injection recovery
+- clean control collapse
+- stable holdout behavior
+- stable sensitivity behavior
+- rejection of the advanced joint model under complexity and lift criteria
+
+This demonstrates that CDR can produce **clean null_results** without inflating false positives through model complexity, proxy layers, or post-hoc interpretation.
+
+---
+
+#### 2. Joint-state modeling can dilute individual structure
+
+Phase III.1 showed that individual-domain residual structure may not survive joint-state construction.
+
+In the 10-subject diagnostic run:
+
+- EEG-only reached `ε_test ≈ 0.10`
+- RNG-only remained near `ε_test ≈ 0.00` globally
+- the final joint model remained at `ε_joint_test = 0.00`
+
+This suggests that combining domains into a single joint state can dilute or suppress signals that are visible in single-domain baselines.
+
+This does **not** imply that the individual signals are false; rather, it indicates that joint-state representation may be insufficient when two domains contain structures that are orthogonal, weakly coupled, or conditionally related rather than directly coupled.
+
+---
+
+#### 3. BIC / complexity penalty is essential in CDR
+
+The advanced Phase III.1 model was theoretically richer but statistically unjustified.
+
+Representative comparison:
+
+| Model | State space | Parameters | Result |
+|------|-------------|------------|--------|
+| `M0_observed_compact` | 8 states | 57 parameters | lower complexity |
+| `M5_augmented_final` | 27 states | 703 parameters | strongly penalized by BIC |
+
+The final model `M5_augmented_final` did not improve test likelihood or joint epsilon enough to justify its additional complexity.
+
+This supports the use of BIC / MDL-style penalties as a necessary protection against over-flexible CDR models.
+
+---
+
+#### 4. Subject-shift sensitivity requires internal validation
+
+Phase III.1 diagnostics showed that some subject-level LOSO signals appeared initially but disappeared under within-subject chronological diagnostics.
+
+Examples:
+
+- `SC4002 / M3_informational_joint`
+- `SC4032 / M2_rng_quantum_proxy`
+- `SC4022 / B1_rng_only`
+
+These signals were therefore interpreted as likely subject-shift or split-dependent effects rather than robust EEG–RNG coupling.
+
+This establishes a new methodological requirement:
+
+```
+LOSO leads must be checked against within-subject chronological diagnostics before being treated as candidate CDR effects.
+```
+
+---
+
+#### 5. State-space density remains a critical design constraint
+
+The Phase III experimental sequence confirmed that CDR is highly sensitive to the ratio between transition count and state-space size.
+
+Empirically, sparse state spaces produced unstable behavior, while compact representations were more reproducible.
+
+A practical rule emerging from the project is:
+
+```
+n_states should remain well below the effective number of observed transitions,
+with transitions_per_state treated as a core stability diagnostic.
+```
+
+A provisional practical heuristic is:
+
+
+```
+n_states ≤ √n_transitions
+``` 
+
+but this should be treated only as a conservative design guideline, not as a universal mathematical law.
+
+The final decision must still depend on:
+
+- observed transition density
+- control collapse
+- injection recovery
+- holdout behavior
+- sensitivity stability
+- BIC / complexity penalty
 
 ---
 
@@ -1169,7 +1326,443 @@ This is best interpreted as:
 - a successful falsifiable implementation of the first EEG–RNG joint experiment
 - but **not** as strong evidence of robust neural–stochastic coupling under the current observational setup
 
+
 ---
+
+## Phase III.1 — Advanced Multi-Subject EEG + RNG Redesign (Completed)
+
+🔗 **GitHub repository:**
+
+https://github.com/ThiagoLuzpY/cdr-phase3.1-advanced-eeg-rng
+
+
+---
+
+### Objective
+
+Phase III.1 was designed as a more advanced redesign of the previous joint EEG + RNG experiment.
+
+The earlier Phase III.0.3 joint experiment showed that compact EEG + RNG state spaces could be stabilized, but the observed joint epsilon remained weak:
+
+
+```
+ε_joint ≈ 0.00–0.03
+```
+
+Phase III.1 therefore tested whether stronger joint structure could emerge after adding:
+
+- multiple EEG subjects
+- informational proxy variables
+- latent inferred states
+- quantum-aware proxy variables
+- stricter model-comparison gates
+- subject-level diagnostics
+- corrected proxy ablations
+
+The central question was:
+
+> Can a deeper EEG–RNG joint structure be detected only after introducing informational, latent, or quantum-aware proxy layers rather than relying on raw EEG–RNG state pairing?
+
+---
+
+### Dataset
+
+**EEG source:**
+
+Sleep-EDF Expanded
+PhysioNet
+subset: sleep-cassette
+
+
+Subjects used:
+
+
+```
+SC4001
+SC4002
+SC4011
+SC4012
+SC4021
+SC4022
+SC4031
+SC4032
+SC4041
+SC4042
+```
+
+Recordings used:
+
+
+```
+SC4001E0
+SC4002E0
+SC4011E0
+SC4012E0
+SC4021E0
+SC4022E0
+SC4031E0
+SC4032E0
+SC4041E0
+SC4042E0
+```
+
+EEG channel used:
+
+
+```
+EEG Fpz-Cz
+```
+
+Effective dataset size:
+
+
+```
+10 subjects
+27,597 EEG epochs
+30 seconds per epoch
+```
+
+---
+
+### RNG source
+
+**RNG source:**
+
+ANU Quantum Random Number Generator
+
+
+Raw RNG sample:
+
+
+```
+1024 uint8 values
+```
+
+Final RNG representation:
+
+
+```
+1024 uint8 × 8 bits = 8192 binary bits
+```
+
+RNG alignment mode:
+
+
+```
+resample_rng_metrics_to_eeg_epochs
+```
+
+RNG window size:
+
+
+```
+64 bits
+```
+
+---
+
+### Advanced state construction
+
+Phase III.1 expanded the previous joint representation from:
+
+
+```
+state_t = (EEG_t, RNG_t)
+```
+
+toward an augmented structure:
+
+
+```
+state_t = (EEG_t, RNG_t, I_t, Z_t, Q_t)
+```
+
+where:
+
+- `I_t` = informational proxy layer
+- `Z_t` = latent inferred state
+- `Q_t` = quantum-aware proxy layer
+
+The conceptual effective structural term was represented as:
+
+```
+Δχ* = Δχ_observed + λ₁ I_t + λ₂ Z_t + λ₃ Q_t
+```
+
+This preserved the falsifiable structure of CDR while allowing the model to test deeper informational and quantum-aware proxy hypotheses.
+
+Model family
+
+Phase III.1 evaluated the following models:
+
+Model	Description
+B0_eeg_only	EEG-only baseline
+B1_rng_only	RNG-only baseline
+M0_observed_compact	compact observed EEG + RNG model
+M1_eeg_informational	EEG + informational proxy model
+M2_rng_quantum_proxy	RNG + quantum-aware proxy model
+M3_informational_joint	EEG informational proxy × RNG informational proxy
+M4_latent_joint	latent-state joint model
+M5_augmented_final	final augmented model with informational, latent, and quantum-aware proxy structure
+
+The final registered advanced model was:
+```
+M5_augmented_final
+Phase III.1 gates
+```
+
+Phase III.1 retained the original empirical gates:
+```
+Gate	Meaning
+F1	Injection recovery
+F2	Controls collapse
+F3	Holdout generalization
+F5	Sensitivity stability
+```
+and added advanced joint-model gates:
+
+```
+Gate	Meaning
+F6	Incremental joint lift beyond EEG-only and RNG-only baselines
+F7	Subject-level generalization
+F8	Complexity penalty / BIC justification
+F9	Proxy ablation stability
+Main Phase III.1 results
+```
+
+
+CDR Phase III.1 (Advanced EEG + RNG)
+────────────────────────────────
+
+```
+F1_injection_recovery: PASS
+eps_hat: 0.03
+eps_true: 0.05
+abs_err: 0.02
+tol_abs: 0.05
+
+F2_controls_collapse: PASS
+n_controls: 12
+median_eps_controls: 0.00
+mean_eps_controls: 0.00
+max_eps_controls: 0.00
+fraction_below_tol: 1.00
+
+F3_holdout_generalization: PASS
+eps_train: 0.00
+eps_test: 0.00
+abs_delta: 0.00
+max_delta: 0.10
+
+F5_sensitivity: PASS
+eps_primary: 0.00
+eps_sensitivity: 0.00
+abs_delta: 0.00
+max_delta: 0.12
+
+F6_incremental_joint_lift: FAIL
+eps_joint_test: 0.00
+eps_eeg_test: 0.10
+eps_rng_test: 0.00
+baseline_max: 0.10
+joint_lift: -0.10
+joint_lift_min: 0.03
+strong_joint_eps_min: 0.07
+
+F7_subject_generalization: FAIL
+n_subjects: 10
+n_valid_subjects: 10
+fraction_positive_lift: 0.00
+median_joint_eps: 0.00
+median_eeg_eps: 0.00
+median_rng_eps: 0.00
+
+F8_complexity_penalty: FAIL
+baseline_model: M0_observed_compact
+advanced_model: M5_augmented_final
+baseline_BIC: 9178.45
+advanced_BIC: 16540.56
+baseline_n_states: 8
+advanced_n_states: 27
+baseline_n_params: 57
+advanced_n_params: 703
+
+F9_proxy_ablation_stability: FAIL
+full_eps_joint: 0.00
+remove_I_t: 0.00
+remove_Z_t: 0.00
+remove_Q_t: 0.00
+
+────────────────────────────────
+FINAL: NULL_RESULT
+```
+
+
+Diagnostic model ranking
+
+The diagnostic ranking showed that the best global model was not the advanced joint model.
+
+Best diagnostic model:
+
+B0_eeg_only
+
+Diagnostic values:
+```
+eps_test: 0.10
+BIC_test: 6987.06
+LL_test: -3203.99
+n_states: 9
+```
+This means that the EEG-only model retained detectable residual structure, while the advanced EEG + RNG joint model did not improve beyond the single-domain baseline.
+
+Subject-level diagnostics
+
+The 10-subject LOSO diagnostic initially produced isolated leads:
+```
+SC4002 / M3_informational_joint:
+eps_test: 0.08
+lift_over_baseline: 0.08
+
+SC4032 / M2_rng_quantum_proxy:
+eps_test: 0.08
+lift_over_baseline: 0.08
+
+SC4022 / B1_rng_only:
+eps_test: 0.80
+```
+
+However, these leads did not survive internal chronological diagnostics.
+
+Internal all-subject diagnostics showed:
+
+```
+internal_positive_lift_rows: none
+```
+
+The only internal positive epsilon row was:
+
+
+SC4002 / B1_rng_only:
+
+```
+eps_test: 0.15
+lift_over_baseline: 0.00
+```
+
+This indicates that the apparent LOSO leads were more consistent with:
+
+```
+subject-shift effects
+split-dependent structure
+baseline-specific variation
+```
+
+rather than robust EEG–RNG coupling.
+
+RNG alignment audit
+
+The RNG alignment audit did not reveal a gross alignment anomaly.
+
+Summary:
+```
+n_subjects: 10
+
+rng_bit_mean:
+min: 0.4824
+median: 0.5005
+max: 0.5110
+
+rng_bit_transition_rate_subject:
+min: 0.4841
+median: 0.4922
+max: 0.5055
+```
+
+rng_window_reuse_ratio:
+
+```
+1.00 across subjects
+```
+
+This supports the interpretation that the Phase III.1 null result was not caused by an obvious RNG bit-balance or window-reuse artifact.
+
+Sleep-stage distribution
+
+The Sleep-EDF subjects were strongly dominated by Wake epochs.
+
+Examples:
+
+Subject	W epochs	N2 epochs	N3 epochs	REM epochs
+SC4001	1997	250	220	125
+SC4002	1885	373	297	215
+SC4022	1871	402	119	179
+SC4032	1957	400	131	199
+SC4042	1773	514	94	270
+
+This observation motivates the next stage of analysis:
+
+### Phase III.2 — regime-aware and sleep-stage-filtered EEG–RNG validation
+
+because a global model mixing Wake, N1, N2, N3 and REM may dilute regime-specific structure.
+
+### Phase III.1 interpretation
+
+Phase III.1 produced a clean null result.
+
+The advanced model succeeded technically in the sense that:
+```
+injection recovery passed
+controls collapsed
+holdout generalization passed
+sensitivity stability passed
+ablation artifacts were corrected
+subject-level diagnostics were performed
+RNG alignment was audited
+```
+
+However, the advanced joint model failed to demonstrate:
+```
+positive joint lift
+subject-level generalization
+complexity justification
+proxy-dependent signal reduction
+```
+
+Therefore, the final conclusion is:
+
+Phase III.1 did not reveal robust EEG–RNG joint structure beyond the single-domain baselines under the current design.
+
+This does not invalidate the CDR framework.
+
+Instead, it strengthens the falsifiability of the framework by showing that CDR can reject an advanced theoretical model when the evidence does not survive the required gates.
+
+Scientific meaning of the null result
+
+The Phase III.1 null result should be interpreted as a boundary condition:
+
+```
+EEG-only structure remains detectable
+RNG-only behaves as a clean stochastic baseline globally
+the advanced joint EEG + RNG model does not show robust coupling
+LOSO leads require internal validation before interpretation
+model complexity must be justified by BIC / likelihood improvement
+global joint-state modeling may be too coarse for subtle EEG–RNG hypotheses
+```
+
+The next step is therefore not to repeat the same joint model.
+
+The next step is to test whether any possible effect is:
+
+```
+regime-dependent
+sleep-stage-dependent
+lag-dependent
+conditional rather than directly joint
+better captured through enriched multi-channel EEG features
+```
+
+---
+
 
 ## Phase III Scientific Interpretation
 
@@ -1178,128 +1771,213 @@ Phase III achieved three important results:
 1. **EEG-only** validation confirmed low but non-zero residual neural structure  
 2. **RNG-only** validation established a strong null stochastic baseline  
 3. **Joint EEG + RNG** validation showed that, in the present design, the cross-domain joint epsilon remains weak
+4. **Advanced multi-subject EEG + RNG redesign** produced a clean null result under stricter latent, informational, quantum-aware and subject-level validation gates
 
-This does **not** invalidate broader ontological interpretations such as TSQP, but it does constrain the simpler version of the EEG–RNG coupling hypothesis tested here.
 
 The main conclusion of Phase III is therefore:
 
-- the simple observational joint design is **stable and falsifiable**
-- but likely too coarse to capture a deeper latent or quantum-aware informational principl
+- direct neural domains may exhibit low residual structure under CDR
+- stochastic RNG baselines remain structurally sufficient at the tested resolution
+- simple joint EEG + RNG state construction does not show robust coupling
+- advanced joint modeling with `I_t`, `Z_t` and `Q_t` also does not reveal robust coupling under the current public observational setup
+- subject-level LOSO leads must be validated internally before interpretation
+- CDR can produce clean null results without inflating false positives
+
+
+The main conclusion of Phase III is: 
+
+- the EEG-only domain remains the strongest neural signal found so far 
+- the RNG-only domain remains a clean stochastic null 
+- the EEG + RNG joint domain remains unresolved 
+- a deeper test requires regime-aware, lagged and conditional modeling rather than a single global joint-state model
 
 ## Future Validation Domains
 
-### Phase III.1 Redesign — Multi-Subject and Quantum-Aware Joint Experiment
+### Phase III.2 — Regime-Aware, Lagged and Conditional EEG–RNG Validation
 
-The next step of the project is **not** to repeat the simple EEG-only or RNG-only baselines.
+The next stage of the project is **not** to repeat the Phase III.1 global joint-state model.
 
-Instead, the next phase will redesign the joint experiment itself.
+Phase III.1 showed that:
 
-The current Phase III demonstrated that:
+- EEG-only residual structure remains detectable
+- RNG-only remains globally consistent with a stochastic baseline
+- the advanced multi-subject joint model did not produce robust joint lift
+- isolated LOSO leads disappeared under internal subject diagnostics
+- Wake epochs dominate the Sleep-EDF records
+- global EEG + RNG state construction may be too coarse for subtle coupling hypotheses
 
-- EEG-only produces low but non-zero residual structure
-- RNG-only behaves as a strong stochastic null baseline
-- the simple observational joint EEG + RNG design remains too weak to reveal robust cross-domain structure
+This motivates a new stage:
 
-This motivates a new redesign stage.
+
+
+Phase III.2 — Regime-Aware, Lagged and Conditional EEG–RNG Validation
+
 
 ---
 
 ### Objective
 
-Build a more advanced joint framework capable of testing whether a deeper informational principle may exist beyond the directly observed classical signals.
+Test whether the absence of robust EEG–RNG joint structure in Phase III.1 is due to limitations of global state construction.
+
+Phase III.2 will investigate whether any possible EEG–RNG effect is:
+
+- regime-dependent
+- sleep-stage-dependent
+- lag-dependent
+- conditional rather than directly joint
+- better captured through enriched EEG features
 
 ---
 
-### Planned redesign axes
+### Planned submodules
 
-#### 1. Multi-subject EEG expansion
-The next joint experiment will incorporate multiple EEG subjects rather than relying on a single subject only.
+#### III.2A — Regime-aware / sleep-stage analysis
+
+Phase III.2A will test whether the EEG–RNG relationship changes when the data are separated by sleep regime.
+
+Planned regimes:
+
+
+```
+full
+no_wake
+stable_sleep = N2 + N3
+deep_sleep = N3
+REM_only
+transition_epochs
+```
 
 Purpose:
-- improve robustness
-- reduce dependence on individual-specific sleep structure
-- test whether weak joint effects remain stable across subjects
+
+- test whether Wake dominates or dilutes the joint signal
+- evaluate whether sleep-only states show stronger residual structure
+- separate global null results from regime-specific behavior
 
 ---
 
-#### 2. Informational latent layer
-The next version will no longer rely only on raw observables such as bandpower and binary RNG bits.
+#### III.2B — Lagged EEG–RNG alignment
 
-Additional derived variables may include:
+Phase III.2B will test whether the possible relationship depends on temporal offset.
 
-- spectral entropy
-- permutation entropy
-- local complexity
-- run-length entropy
-- compressibility proxies
-- local surprise / self-information
-- persistence and transition-regime variables
+Pre-registered lags:
+
+
+```
+-5, -3, -1, 0, +1, +3, +5 epochs
+```
+
+With 30-second EEG epochs, these correspond to:
+
+
+```
+-150 s, -90 s, -30 s, 0 s, +30 s, +90 s, +150 s
+```
 
 Purpose:
-- test whether informational structure appears more clearly in latent-derived variables than in raw observables alone
+
+- test temporal alignment sensitivity
+- avoid assuming that any possible relationship must occur at lag 0
+- preserve falsifiability by limiting lags to a fixed pre-defined set
 
 ---
 
-#### 3. Quantum-aware proxy layer
-The current Phase III joint model uses the final observed stochastic output only.
+#### III.2C — Conditional CDR
 
-The redesign will explicitly explore whether a deeper latent term should be modeled, for example via proxies related to:
+Phase III.2C will test conditional relationships rather than direct joint-state coupling.
 
-- pre-measurement instability
-- hidden-basis-like latent structure
-- background informational noise
-- collapse / decoherence proxies
-- regime-dependent latent coupling terms
+Main comparisons:
+
+
+```
+C0: P(EEG_{t+1} | EEG_t)
+C1: P(EEG_{t+1} | EEG_t, RNG_t)
+
+C2: P(RNG_{t+1} | RNG_t)
+C3: P(RNG_{t+1} | RNG_t, EEG_t)
+```
 
 Purpose:
-- move beyond a purely classical observational joint design
-- test whether the hypothesized informational principle may require latent or indirect modeling rather than direct raw-state coupling
+
+- test whether RNG_t adds information about EEG_{t+1}
+- test whether EEG_t adds information about RNG_{t+1}
+- avoid diluting signal in a large global joint state
+- distinguish conditional influence from simple joint-state structure
+
+This is expected to be the most important Phase III.2 module.
 
 ---
 
-### Conceptual mathematical direction
+#### III.2D — Multi-channel EEG enrichment
 
-A future redesign may extend the joint state model from:
+Phase III.2D will evaluate whether a richer EEG representation improves detection.
 
-```
-state_t = (EEG_t, RNG_t)
-```
+The current validated EEG channel is:
 
-toward an augmented formulation such as:
 
 ```
-state_t = (EEG_t, RNG_t, I_t, Z_t, Q_t)
+EEG Fpz-Cz
 ```
 
-where:
+Future enrichment may include:
 
-- `I_t` = informational proxy variables
-- `Z_t` = latent inferred state
-- `Q_t` = quantum-aware proxy term
-
-and where the effective structural term may evolve from:
 
 ```
-Δχ_observed
+EEG Pz-Oz
 ```
 
-to something closer to:
+and derived cross-channel features such as:
 
-```
-Δχ* = Δχ_observed + λ₁ I_t + λ₂ Z_t + λ₃ Q_t
-```
+- power differences
+- spectral balance differences
+- simple epoch-level channel correlation
+- cross-channel spectral ratios
 
-This preserves the falsifiable spirit of CDR while allowing the framework to test deeper hypotheses about informational or quantum-mediated structure.
+Purpose:
+
+- test whether a single EEG channel is too limited
+- evaluate whether spatial EEG structure improves CDR sensitivity
+- prepare for future synchronized EEG + QRNG experiments
 
 ---
 
-### Scientific meaning of Phase III.1 Redesign
+#### III.2E — Future synchronized EEG + QRNG protocol
 
-The redesigned phase is intended to answer a more ambitious question than the current observational joint test:
+The current EEG and RNG data were not collected simultaneously.
 
-> *If a deeper informational principle exists, can it be detected only after introducing latent, informational, or quantum-aware structure into the model rather than relying on the raw EEG–RNG pairing alone?*
+A stronger future experiment would require:
 
-This will be the main focus of the next stage of the project.
+
+```
+real-time EEG
++
+real-time QRNG
++
+shared timestamps
++
+same subject
++
+same session
++
+controlled sleep, rest, meditation or cognitive conditions
+```
+
+This future design would test a much stronger version of the EEG–QRNG hypothesis than the current public-data observational setup.
+
+---
+
+### Scientific meaning of Phase III.2
+
+Phase III.2 will answer a more refined question than Phase III.1:
+
+> If a deeper EEG–RNG relationship exists, does it appear only under specific neural regimes, temporal lags, or conditional transition structures rather than in a global joint-state model?
+
+The goal is not to force a positive result.
+
+The goal is to test whether the Phase III.1 null result is:
+
+- a true null under public EEG + RNG data
+- a limitation of global joint-state representation
+- or a sign that more precise regime-aware and conditional modeling is required
 
 ---
 
@@ -1315,13 +1993,17 @@ cdr-phase1-validation/
 │   ├── phase2_config_fmri.py
 │   ├── phase2_config_mobility.py
 │   └── phase2_config_protein.py
-│   └── phase2_config_eeg.py
-│   └── phase2_config_joint.py
-│   └── phase2_config_rng.py
+│   └── phase3_config_eeg.py
+│   └── phase3_config_joint.py
+│   └── phase3_config_rng.py
+│   └── phase3_1_config.py
 │
 ├── data/
 │   ├── interim/
+│       ├── interion/
+│       │   ├── phase3_1/
 │   ├── processed/
+│       ├── phase3_1/
 │   └── raw/
 │       ├── ecology/
 │       ├── fmri/
@@ -1329,30 +2011,11 @@ cdr-phase1-validation/
 │       ├── eeg/
 │       ├── rng/
 │       ├── opsp/
-│       │   ├── datapackage.json
-│       │   ├── README.md
-│       │   ├── time_series.sqlite
-│       │   └── time_series_60min_singleindex.csv
 │       └── protein/
-│           ├── alanine-dipeptide-nowater.pdb
-│           ├── alanine-dipeptide-0-250ns-nowater.xtc
-│           ├── alanine-dipeptide-1-250ns-nowater.xtc
-│           └── alanine-dipeptide-2-250ns-nowater.xtc
 │
 ├── results/
 │   ├── golden_run_phase1_plus_v1/
 │   ├── phase2_opsp/
-│   │   ├── bins_specs.json
-│   │   ├── checkpoint_controls.json
-│   │   ├── checkpoint_eps.json
-│   │   ├── data_report.json
-│   │   ├── ll_injection.png
-│   │   ├── ll_test.png
-│   │   ├── ll_train.png
-│   │   ├── phase2_config.json
-│   │   ├── phase2_results.json
-│   │   ├── report.txt
-│   │   └── selection.json
 │   ├── phase2_ecology/
 │   ├── phase2_fmri/
 │   ├── phase2_mobility/
@@ -1360,6 +2023,7 @@ cdr-phase1-validation/
 │   ├── phase3_eeg/
 │   ├── phase3_joint/
 │   ├── phase3_rng/
+│   ├── phase3_1/
 │   └── .gitkeep
 │
 ├── scripts/
@@ -1385,6 +2049,7 @@ cdr-phase1-validation/
 │   ├── controls_phase3_eeg.py
 │   ├── controls_phase3_joint.py
 │   ├── controls_phase3_rng.py
+│   ├── controls_phase3_1.py
 │   ├── discretize.py
 │   ├── ecology_loader.py
 │   ├── eeg_loader.py
@@ -1405,6 +2070,12 @@ cdr-phase1-validation/
 │   ├── phase3_runner_eeg.py
 │   ├── phase3_runner_joint.py
 │   ├── phase3_runner_rng.py
+│   ├── phase3_1_diagnostics.py
+│   ├── phase3_1_features.py
+│   ├── phase3_1_latent.py
+│   ├── phase3_1_loader.py
+│   ├── phase3_1_metrics.py
+│   ├── phase3_1_runner.py
 │   ├── protein_loader.py
 │   ├── rng_loader.py
 │   ├── statistics.py
@@ -1472,6 +2143,12 @@ python -m src.phase3_runner_rng
 python -m src.phase3_runner_joint
 ```
 
+**Advanced Phase III.1 EEG + RNG redesign:**
+```bash
+ python -m src.phase3_1_runner 
+ python -m src.phase3_1_diagnostics
+ ```
+
 **Results saved in:**
 ```
 results/phase2_opsp/
@@ -1482,6 +2159,8 @@ results/phase2_protein/
 results/phase3_eeg/
 results/phase3_rng/
 results/phase3_joint/
+results/phase3_1/
+results/phase3_1/diagnostics/
 ```
 
 ---
@@ -1499,23 +2178,75 @@ The pipeline ensures reproducibility via:
 - ✅ Explicit separation between observational domains, neural domains, stochastic baselines, and joint domains
 - ✅ Stable compact state-space redesign when sparsity becomes dominant
 
+Additional reproducibility safeguards introduced in Phase III.1: 
+
+- ✅ Multi-subject EEG loading with explicit subject identifiers 
+- ✅ Prevention of artificial transitions across subject / recording boundaries 
+- ✅ RNG alignment audit 
+- ✅ Corrected proxy ablations using within-subject shuffle rather than constant replacement 
+- ✅ Internal chronological diagnostics for all subjects 
+- ✅ LOSO leads separated from within-subject persistent effects 
+- ✅ Explicit BIC / complexity-penalty evaluation 
+- ✅ Separation between registered model results and post-run diagnostics
+
 All experiments are deterministic under identical configurations.
 
 ---
 ### Experimental data sources used in Phase III
 
 **EEG source:**
+
 ```
 Sleep-EDF Expanded
+PhysioNet
+subset: sleep-cassette
 ```
 
-Files used in the first validated experimental run:
+Files used in the first validated Phase III.0.1 EEG-only run:
+
 ```
 SC4001E0-PSG.edf
 SC4001EC-Hypnogram.edf
 ```
 
+Files used in Phase III.1 advanced multi-subject redesign:
+
+
+```
+SC4001E0-PSG.edf
+SC4001EC-Hypnogram.edf
+
+SC4002E0-PSG.edf
+SC4002EC-Hypnogram.edf
+
+SC4011E0-PSG.edf
+SC4011EH-Hypnogram.edf
+
+SC4012E0-PSG.edf
+SC4012EC-Hypnogram.edf
+
+SC4021E0-PSG.edf
+SC4021EH-Hypnogram.edf
+
+SC4022E0-PSG.edf
+SC4022??-Hypnogram.edf
+
+SC4031E0-PSG.edf
+SC4031??-Hypnogram.edf
+
+SC4032E0-PSG.edf
+SC4032??-Hypnogram.edf
+
+SC4041E0-PSG.edf
+SC4041??-Hypnogram.edf
+
+SC4042E0-PSG.edf
+SC4042??-Hypnogram.edf
+```
+
+
 **RNG source:**
+
 ```
 ANU Quantum Random Number Generator
 ```
@@ -1525,12 +2256,22 @@ Sample file used:
 anu_sample.json
 ```
 
-Final validated RNG representation:
+Raw RNG sample:
 ```
-uint8 values converted into binary bits
+1024 uint8 values
 ```
 
-This allowed the stochastic baseline to remain falsifiable while increasing usable sequence
+Final RNG representation:
+```
+1024 uint8 × 8 bits = 8192 binary bits
+```
+
+Final validated RNG alignment mode:
+```
+resample_rng_metrics_to_eeg_epochs
+```
+
+This allowed the stochastic baseline to remain falsifiable while enabling EEG-aligned RNG proxy construction for Phase III.1.
 
 
 ---
@@ -1545,6 +2286,8 @@ This allowed the stochastic baseline to remain falsifiable while increasing usab
 - Alanine dipeptide molecular dynamics trajectories
 - Sleep-EDF Expanded dataset (PhysioNet)
 - ANU Quantum Random Number Generator
+- MNE-Python 
+- scikit-learn
 
 ---
 
@@ -1591,8 +2334,10 @@ Thanks to the open scientific ecosystem:
 - Microsoft GeoLife Dataset
 - Sleep-EDF Expanded dataset (PhysioNet)
 - ANU Quantum Random Number Generator
+- MNE-Python 
+- scikit-learn
 
 ---
 
-**Last updated:** March 2026  
-**Status:** Phase I complete ✅ | Phase II.1A complete ✅ | Phase II.1B complete ✅ | Phase II.2 complete ✅ | Phase II.3 complete ✅ | Phase II.4 complete ✅ | Phase III.0.1 complete ✅ | Phase III.0.2 complete ✅ | Phase III.0.3 complete ✅ | Phase III.1 Redesign planned 📋
+**Last updated:** June 2026  
+**Status:** Phase I complete ✅ | Phase II.1A complete ✅ | Phase II.1B complete ✅ | Phase II.2 complete ✅ | Phase II.3 complete ✅ | Phase II.4 complete ✅ | Phase III.0.1 complete ✅ | Phase III.0.2 complete ✅ | Phase III.0.3 complete ✅ | Phase III.1 complete ✅ | Phase III.2 planned 📋
